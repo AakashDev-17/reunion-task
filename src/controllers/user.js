@@ -5,6 +5,9 @@ const usrCtrl = {
     try {
       const otherID = req.params.id;
       const userID = req.user;
+      if(userID === otherID) {
+        return res.status(300).json({msg: "Can not follow yourself"});
+      }
       let othersdata = await User.findById(otherID); // others = whom we want to follow
       let usersdata = await User.findById(userID); // user = us
       if (othersdata && usersdata) {
